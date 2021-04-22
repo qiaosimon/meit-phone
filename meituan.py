@@ -182,7 +182,7 @@ def getheaders(abbr):
 def getdate(offset, limit, cateId):
     data = {
         "uuid": "90478bb8bf3b4047b234.1618798623.1.0.0",
-        "userid": "301387309",#用户ID需要修改
+        "userid": "",#用户ID需要修改
         "limit": limit,
         "offset": offset,
         "cateId": cateId,
