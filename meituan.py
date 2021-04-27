@@ -10,7 +10,7 @@ import sys
 # 全局计数器
 index = 2
 
-#城市
+# 城市
 citys = [{
     'name': '天津',
     'abbr': 'tj',
@@ -63,11 +63,7 @@ citys = [{
     'name': '苏州',
     'abbr': 'sz',
     'cityid': '80'
-}]
-
-
-
-citys2 = [{
+}, {
     'name': '成都',
     'abbr': 'cd',
     'cityid': '59'
@@ -89,8 +85,48 @@ citys2 = [{
     'cityid': '125'
 }]
 
+now_citys = [{
+    'name': '武汉',
+    'abbr': 'wh',
+    'cityid': '57'
+}, {
+    'name': '南京',
+    'abbr': 'nj',
+    'cityid': '55'
+}, {
+    'name': '杭州',
+    'abbr': 'hz',
+    'cityid': '50'
+}, {
+    'name': '南昌',
+    'abbr': 'nc',
+    'cityid': '83'
+}, {
+    'name': '郑州',
+    'abbr': 'zz',
+    'cityid': '73'
+}, {
+    'name': '长沙',
+    'abbr': 'chs',
+    'cityid': '70'
+}]
+
+now_cates = [{
+    'name': '美容美体',
+    'cateId': '76'
+}, {
+    'name': '祛痘',
+    'cateId': '20421'
+}, {
+    'name': '瘦身纤体',
+    'cateId': '20422'
+}, {
+    'name': '医学美容',
+    'cateId': '20423'
+}]
+
 # 分类
-cates = [{
+liren_cates = [{
     'name': '养发',
     'cateId': '21394'
 }, {
@@ -113,26 +149,25 @@ cates = [{
     'cateId': '20421'
 }]
 
-my_cates = [{
+qingzi_cates = [{
     'name': '亲子活动',
     'cateId': '21284'
-},{
+}, {
     'name': '亲子会所',
     'cateId': '21283'
-},{
+}, {
     'name': '儿童乐园',
     'cateId': '20108'
-},{
+}, {
     'name': '婴儿游泳',
     'cateId': '20514'
-},{
+}, {
     'name': '新生儿摄影',
     'cateId': '21282'
-},{
+}, {
     'name': '母婴护理',
     'cateId': '20042'
 }]
-
 
 # 收集到的常用Header
 my_headers = [
@@ -163,17 +198,19 @@ def isphone(phone):
                 if len(array[i]) == 11:
                     return array[i]
 
-#请求url中包含城市ID
+
+# 请求url中包含城市ID
 def geturl(cityid):
     url = "https://apimobile.meituan.com/group/v4/poi/pcsearch/" + cityid
     return url
 
-#请求头需要城市的简称
+
+# 请求头需要城市的简称
 def getheaders(abbr):
     headers = {
         "User-Agent": random.choice(my_headers),
         "Referer": "https://" + abbr + ".meituan.com/",
-        "Cookie": "uuid=ef14ec3b55854487bd96.1618964691.1.0.0; _lxsdk_cuid=178f1d0264ec8-0648711e6624b4-3f356b-100200-178f1d0264e99; ci=1; mtcdn=K; lsu=; rvct=1; _lx_utm=utm_source%3Dbing%26utm_medium%3Dorganic; userTicket=MdiFnARsHKJHAwuOutdJlwUOWMCSngtUTEufYrXl; u=301387309; n=Iwl823661906; lt=im2rm2IpGGak0SngipFRGbIzLooAAAAARg0AAI8fCS-046-PkfJbyoZlu4wHogUiw9X2lne6jAusBowI-vtU8RDQIzP83MlSr37Isw; mt_c_token=im2rm2IpGGak0SngipFRGbIzLooAAAAARg0AAI8fCS-046-PkfJbyoZlu4wHogUiw9X2lne6jAusBowI-vtU8RDQIzP83MlSr37Isw; token=im2rm2IpGGak0SngipFRGbIzLooAAAAARg0AAI8fCS-046-PkfJbyoZlu4wHogUiw9X2lne6jAusBowI-vtU8RDQIzP83MlSr37Isw; token2=im2rm2IpGGak0SngipFRGbIzLooAAAAARg0AAI8fCS-046-PkfJbyoZlu4wHogUiw9X2lne6jAusBowI-vtU8RDQIzP83MlSr37Isw; unc=Iwl823661906; _lxsdk_s=178f1d0264f-31f-19-caf%7C%7C44; firstTime=1618969192163"
+        "Cookie": "uuid=8d3f41b9eee349c9908e.1619505483.1.0.0; _lx_utm=utm_source%3Dbing%26utm_medium%3Dorganic; _lxsdk_cuid=179120bf9b5c8-007d1266fe019e-d7e163f-100200-179120bf9b5c8; mtcdn=K; userTicket=efVfCassnVTuAksNLRXqXAtBTYAEOFsxeqUrXpjV; u=824213835; n=%E4%B8%80%E5%93%A5403; lt=Z62WW2mDrw4qbWcl_oXlJprusjAAAAAAZg0AAGZGBIJYhQJEDcwECzSF2y5W8tB3L__QEhka6mSxg5sk9jc2D01sH3xZuJY6CQKc1w; mt_c_token=Z62WW2mDrw4qbWcl_oXlJprusjAAAAAAZg0AAGZGBIJYhQJEDcwECzSF2y5W8tB3L__QEhka6mSxg5sk9jc2D01sH3xZuJY6CQKc1w; token=Z62WW2mDrw4qbWcl_oXlJprusjAAAAAAZg0AAGZGBIJYhQJEDcwECzSF2y5W8tB3L__QEhka6mSxg5sk9jc2D01sH3xZuJY6CQKc1w; lsu=; token2=Z62WW2mDrw4qbWcl_oXlJprusjAAAAAAZg0AAGZGBIJYhQJEDcwECzSF2y5W8tB3L__QEhka6mSxg5sk9jc2D01sH3xZuJY6CQKc1w; unc=%E4%B8%80%E5%93%A5403; ci=83; rvct=83%2C73%2C70%2C50; firstTime=1619507605826; _lxsdk_s=179120bf9b5-6a8-76b-b93%7C%7C28"
     }
     return headers
 
@@ -182,7 +219,7 @@ def getheaders(abbr):
 def getdate(offset, limit, cateId):
     data = {
         "uuid": "90478bb8bf3b4047b234.1618798623.1.0.0",
-        "userid": "",#用户ID需要修改
+        "userid": "1",  # 用户ID需要修改
         "limit": limit,
         "offset": offset,
         "cateId": cateId,
@@ -201,15 +238,17 @@ def saveExcel(cityname, catename, response):
         title = temp.get('title')
         address = temp.get('address')
         phone = temp.get('phone')
-        avgscore = temp.get('avgscore')#评分
-        comments = temp.get('comments')#评论数
-        historyCouponCount = temp.get('historyCouponCount')#历史成交单数
+        avgscore = temp.get('avgscore')  # 评分
+        comments = temp.get('comments')  # 评论数
+        historyCouponCount = temp.get('historyCouponCount')  # 历史成交单数
         # 判断是否有手机号
         phonestr = isphone(phone)
         if not phonestr is None:
             global index
 
-            print(str(index) + '***' + cityname + '***' + catename + '***' + title + '***' + address + '***' + phonestr + '***' + str(avgscore) + '***' + str(comments) + '***' + str(historyCouponCount))
+            print(str(
+                index) + '***' + cityname + '***' + catename + '***' + title + '***' + address + '***' + phonestr + '***' + str(
+                avgscore) + '***' + str(comments) + '***' + str(historyCouponCount))
             # 调整行高
             sheet.row_dimensions[index].height = 25
             # 保存数据
@@ -224,7 +263,7 @@ def saveExcel(cityname, catename, response):
             index = index + 1
 
     # 保存数据
-    workbook.save('D:/母婴.xlsx')
+    workbook.save('D:/美容院.xlsx')
 
 
 # 表格
@@ -240,7 +279,7 @@ sheet.column_dimensions['F'].width = 5
 sheet.column_dimensions['G'].width = 6
 sheet.column_dimensions['H'].width = 11
 
-#标题
+# 标题
 sheet.cell(1, 1, '城市')
 sheet.cell(1, 2, '分类')
 sheet.cell(1, 3, '店铺名')
@@ -250,14 +289,14 @@ sheet.cell(1, 6, '评分')
 sheet.cell(1, 7, '评论数')
 sheet.cell(1, 8, '历史成交单数')
 
-for city in citys2:
+for city in now_citys:
     cityname = city.get('name')
     abbr = city.get('abbr')
     cityid = city.get('cityid')
 
-    #创建http请求对象
+    # 创建http请求对象
     http = urllib3.PoolManager()
-    for cate in my_cates:
+    for cate in now_cates:
         catename = cate.get('name')
         cateid = cate.get('cateId')
 
@@ -276,5 +315,5 @@ for city in citys2:
             print('******************error! system exit************************')
             sys.exit()
         sleeptime = random.randint(1, 15)
-        print('睡眠' + str(sleeptime) + '秒')#防止请求过多被封账号
+        print('睡眠' + str(sleeptime) + '秒')  # 防止请求过多被封账号
         time.sleep(sleeptime)
