@@ -63,12 +63,12 @@ def getheaders(abbr, cookie):
 # 请求参数 offset 偏移量  limit 大小  cateid 分类id
 def getdate(userid, offset, limit, cate_id):
     data = {
-        "uuid": "90478bb8bf3b4047b234.1618798623.1.0.0",
+        "uuid": "e3133799cc6743f9a6e5.1619677050.1.0.0",
         "userid": userid,  # 用户ID需要修改
         "limit": limit,
         "offset": offset,
         "cateId": cate_id,
-        "token": "im2rm2IpGGak0SngipFRGbIzLooAAAAARg0AAI8fCS-046-PkfJbyoZlu4wHogUiw9X2lne6jAusBowI-vtU8RDQIzP83MlSr37Isw",
+        "token": "1acWPgfiHKPGQm8X4ObG6ibDMJsAAAAAZg0AAFxOWcY-6CsIuxnn2tRTiWcCUTMRz9pRrKQvvjEgAdkYBzM-oPefRDyGONc9emMq6Q",
         "areaId": -1
     }
     return data
@@ -92,24 +92,31 @@ def saveshop(cityid, cateid, response):
             select_sql = "SELECT * FROM SHOP WHERE ID = " + str(id)
             flag = mysqldb.select(select_sql)
             if flag == 0:
-                insert_sql = "INSERT INTO SHOP VALUES (" + str(id), ",'AA','SS','123',1,2,'4.5',1,1)"
+                insert_sql = "INSERT INTO SHOP VALUES (" + str(id) +"," \
+                             + "'" + title +"'," \
+                             + "'" + address + "'," \
+                             + "'" + phone_str + "'," \
+                             + str(city.cityid) + "," \
+                             + str(cate.cateid) + "," \
+                             + "'" + str(avgscore) + "'," \
+                             + str(comments) + "," \
+                             + str(historyCouponCount) + ")"
                 mysqldb.insert(insert_sql)
             else:
                 print('商家' + id + '存在！！！')
 
 
 for city in city_list:
-    # 随机的meit账号
     left = len(account_list) - 1
-    account = account_list[random(0, left)]
+    account = account_list[random.randint(0, left)]
     # 创建http请求对象
     http = urllib3.PoolManager()
     for cate in cate_list:
         # 检查该城市的该分类记录是否满足
-        select_shop_count_sql = ""
+        select_shop_count_sql = "SELECT COUNT(*) FROM SHOP WHERE CITYID=" + str(city.cityid) + " AND CATEID=" + str(cate.cateid)
         count = mysqldb.select_shop_count(select_shop_count_sql)
         if count < cate.count:
-            url = geturl(city.cityid)
+            url = geturl(str(city.cityid))
             fields = getdate(account.userid, 0, cate.count, cate.cateid)
             headers = getheaders(city.abbr, account.cookie)
             # 发送请求

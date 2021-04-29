@@ -27,7 +27,6 @@ def insert(sql):
     except:
         print('insert error:' + sql)
         connection.rollback()  # 如果发生错误则回滚
-        connection.close()  # 关闭数据库连接
         return
     finally:
         cur.close()
@@ -126,7 +125,7 @@ def select_shop_count(sql):
     cur = connection.cursor()
     try:
         cur.execute(sql)  # 执行
-        count = cur.fetchall()
+        count = cur.fetchall()[0][0]
         connection.commit()  # 提交到数据库执行
         return count
     except:
