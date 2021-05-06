@@ -144,9 +144,6 @@ liren_cates = [{
 }, {
     'name': '瘦身纤体',
     'cateId': '20422'
-}, {
-    'name': '瑜伽舞蹈',
-    'cateId': '20421'
 }]
 
 qingzi_cates = [{

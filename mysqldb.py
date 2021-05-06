@@ -8,10 +8,10 @@ from bean.City import City
 
 def open_conn():
     connect = pymysql.connect(host='localhost',  # 连接名称，默认127.0.0.1
-                              user='nacos',  # 用户名
-                              passwd='nacos',  # 密码
+                              user='phone',  # 用户名
+                              passwd='phone',  # 密码
                               port=3306,  # 端口，默认为3306
-                              db='nacos',  # 数据库名称
+                              db='phone',  # 数据库名称
                               charset='utf8'  # 字符编码
                               )
     return connect
@@ -64,7 +64,7 @@ def select_acc():
         connection.commit()  # 提交到数据库执行
         list = []
         for row in data:
-            account = Account(row[0], row[1])
+            account = Account(row[0], row[1],row[2],row[3])
             list.append(account)
         return list
     except:
